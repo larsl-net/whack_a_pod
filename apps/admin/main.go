@@ -32,7 +32,7 @@ var (
 	token               = ""
 	errItemNotExist     = fmt.Errorf("Item does not exist")
 	errItemAlreadyExist = fmt.Errorf("Item already exists")
-	root             	= ""
+	root             	= "https://kubernetes.default.svc.cluster.local"
 	namespace			= ""
 )
 
@@ -44,9 +44,9 @@ const (
 )
 
 func main() {
-	root, ex_url := os.LookupEnv("CLUSTER_API_URL")
-	if !ex_url {
-		root = "https://kubernetes.default.svc.cluster.local"
+	rootTemp, ex_url := os.LookupEnv("CLUSTER_API_URL")
+	if ex_url {
+		root = string(rootTemp)
 	}
 	log.Printf("API URL: " + root )
 	log.Printf("starting whack a pod admin api")
