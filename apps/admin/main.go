@@ -32,13 +32,15 @@ var (
 	token               = ""
 	errItemNotExist     = fmt.Errorf("Item does not exist")
 	errItemAlreadyExist = fmt.Errorf("Item already exists")
-	root             	= os.Getenv("CLUSTER_API_URL")
+	root             	= ""
+	namespace			= ""
 )
 
 const (
 	selector         = "app=api"
 	defaultTokenPath = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	defaultCertPath  = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+	defaultNamespacePath = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
 )
 
 func main() {
@@ -58,8 +60,14 @@ func main() {
 
 	certs, err := ioutil.ReadFile(defaultCertPath)
 	if err != nil {
-		log.Printf("could not get token from file system: %v", err)
+		log.Printf("could not get cert from file system: %v", err)
 	}
+
+	b, err := ioutil.ReadFile(defaultNamespacePath)
+	if err != nil {
+		log.Printf("could not get namespace from file system: %v", err)
+	}
+	namespace = string(b)
 
 	// This allows me to use a scratch Dockerfile as described here :
 	// https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
