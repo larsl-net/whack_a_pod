@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -31,16 +32,21 @@ var (
 	token               = ""
 	errItemNotExist     = fmt.Errorf("Item does not exist")
 	errItemAlreadyExist = fmt.Errorf("Item already exists")
+	root             	= os.Getenv("CLUSTER_API_URL")
 )
 
 const (
-	root             = "https://kubernetes"
 	selector         = "app=api"
 	defaultTokenPath = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	defaultCertPath  = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 )
 
 func main() {
+	root, ex_url := os.LookupEnv("CLUSTER_API_URL")
+	if !ex_url {
+		root = "https://kubernetes.default.svc.cluster.local"
+	}
+	log.Printf("API URL: " + root )
 	log.Printf("starting whack a pod admin api")
 	var err error
 

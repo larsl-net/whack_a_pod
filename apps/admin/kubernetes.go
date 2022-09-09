@@ -20,6 +20,10 @@ import (
 	"strconv"
 )
 
+const (
+	defaultNamespace = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+)
+
 type httpClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
@@ -83,7 +87,7 @@ func deletePod(podname string) ([]byte, error) {
 }
 
 func deletePods(node string) ([]byte, error) {
-	url := root + "/api/v1/namespaces/default/pods" + "?labelSelector=" + selector
+	url := root + "/api/v1/namespaces/" + defaultNamespace + "/pods" + "?labelSelector=" + selector
 	if len(node) > 0 {
 		fs := "&fieldSelector=spec.nodeName=" + node
 		url += fs
@@ -142,7 +146,7 @@ func toggleNode(nodename string, inactive bool) ([]byte, error) {
 }
 
 func deleteReplicaSet() ([]byte, error) {
-	url := root + "/apis/extensions/v1beta1/namespaces/default/replicasets" + "?labelSelector=" + selector
+	url := root + "/apis/apps/v1/namespaces/" + defaultNamespace + "/replicasets" + "?labelSelector=" + selector
 
 	b, status, err := queryK8sAPI(url, "DELETE", nil)
 	if err != nil {
@@ -198,7 +202,7 @@ type minimumPort struct {
 }
 
 func createDeployment() ([]byte, error) {
-	selflink := "/apis/extensions/v1beta1/namespaces/default/deployments"
+	selflink := "/apis/apps/v1/namespaces/" + defaultNamespace + "/deployments"
 	url := root + selflink
 
 	image := os.Getenv("APIIMAGE")
@@ -212,7 +216,7 @@ func createDeployment() ([]byte, error) {
 	}
 
 	var d minimumDeployment
-	d.APIVersion = "extensions/v1beta1"
+	d.APIVersion = "apps/v1"
 	d.Kind = "Deployment"
 	d.Metadata.Name = "api-deployment"
 	d.Spec.Replicas = 12
@@ -259,7 +263,7 @@ func createDeployment() ([]byte, error) {
 }
 
 func deleteDeployment(depname string) ([]byte, error) {
-	selflink := "/apis/extensions/v1beta1/namespaces/default/deployments/" + depname
+	selflink := "/apis/apps/v1/namespaces/" + defaultNamespace + "/deployments/" + depname
 	url := root + selflink
 
 	b, status, err := queryK8sAPI(url, "DELETE", nil)

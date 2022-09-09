@@ -11,25 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: wap-ingress
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: %INGRESSNAME%
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /api/*
-        backend:
-          serviceName: api
-          servicePort: 8080
-      - path: /admin/*
-        backend:
-          serviceName: admin
-          servicePort: 8080
-      - path: /*
-        backend:
-          serviceName: game
-          servicePort: 8080
+FROM nginx
+COPY apps/game/default.conf /etc/nginx/conf.d
+COPY apps/game/default /usr/share/nginx/html
+RUN chmod -R 755 /usr/share/nginx/html; \
+    chmod g+rwx /var/cache/nginx /var/run /var/log/nginx; \
+    chmod -R 755 /usr/share/nginx/html
