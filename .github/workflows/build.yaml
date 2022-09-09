@@ -58,7 +58,8 @@ jobs:
 
       - name: Get tag
         id: repository
-        run: echo  "::set-output name=tag::$(git describe --tags HEAD)"
+        #run: echo  "::set-output name=tag::$(git describe --tags HEAD)"
+        run: echo  "::set-output name=tag::${GITHUB_REF##*/}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -95,7 +96,8 @@ jobs:
 
       - name: Get tag
         id: repository
-        run: echo  "::set-output name=tag::$(git describe --tags HEAD)"
+        #run: echo  "::set-output name=tag::$(git describe --tags HEAD)"
+        run: echo  "::set-output name=tag::${GITHUB_REF##*/}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
