@@ -44,7 +44,7 @@ jobs:
           file: docker/admin/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository }}/admin:${{ steps.repository.outputs.tag }}
+          tags: ghcr.io/${{ github.repository }}:admin-${{ steps.repository.outputs.tag }}
 
   build-and-push-api:
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
           file: docker/api/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository }}/api:${{ steps.repository.outputs.tag }}
+          tags: ghcr.io/${{ github.repository }}:api-${{ steps.repository.outputs.tag }}
 
   build-and-push-game:
     runs-on: ubuntu-latest
@@ -118,4 +118,4 @@ jobs:
           file: docker/game/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository }}/game:${{ steps.repository.outputs.tag }}
+          tags: ghcr.io/${{ github.repository }}:game-${{ steps.repository.outputs.tag }}
