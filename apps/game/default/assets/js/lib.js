@@ -146,7 +146,7 @@ function PODS(){
 
 function NODE(json){
     this.name = json.metadata.name;
-    this.selflink = json.metadata.selfLink;
+    this.selflink = "/api/v1/nodes/" + this.name;
     this.type = "Node";
     this.status = "Ready";
 
@@ -166,7 +166,7 @@ function NODE(json){
 
 function POD(json){
 
-    this.selflink = json.metadata.selfLink;
+    this.selflink = "/api/v1/namespaces/" + json.metadata.namespace + "/pods/" + json.metadata.name
     this.type = "Pod";
     this.terminateThreshold = 1000;
     this.phase = "";
@@ -742,7 +742,7 @@ function BOMBUI(waitingimg, explodeimg){
 }
 
 function PODLIST(json){
-    this.selflink = json.metadata.selfLink;
+    this.selflink = "/api/v1/namespaces/" + json.metadata.namespace + "/pods"
     
     this.items = [];
 
