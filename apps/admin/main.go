@@ -63,11 +63,11 @@ func main() {
 		log.Printf("could not get cert from file system: %v", err)
 	}
 
-	b, err := ioutil.ReadFile(defaultNamespacePath)
+	c, err := ioutil.ReadFile(defaultNamespacePath)
 	if err != nil {
 		log.Printf("could not get namespace from file system: %v", err)
 	}
-	namespace = string(b)
+	namespace = string(c)
 
 	// This allows me to use a scratch Dockerfile as described here :
 	// https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
