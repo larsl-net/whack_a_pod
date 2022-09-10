@@ -1,0 +1,10 @@
+apiVersion: 2
+name: Whack-a-Pod
+description: Helm chart to deploy Whack-a-Pod
+version: 0.0.0
+home: https://github.com/larsl-net/whack_a_pod
+sources:
+  - https://github.com/larsl-net/whack_a_pod
+maintainers:
+  - name: Lars Lehmann
+    url: https://github.com/larsl-net

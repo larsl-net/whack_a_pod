@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin
+  template:
+    metadata:
+      labels:
+        app: admin
+    spec:
+      containers:
+      - name: admin
+        image: {{ .Values.admin.image }}
+        imagePullPolicy: Always
+        {{- if .Values.admin.env }}
+        env:
+{{ toYaml .Values.admin.env | indent 12}}
+        {{- end }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      restartPolicy: Always
+      serviceAccount: whack-a-pod-admin
+      serviceAccountName: whack-a-pod-admin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: game
+  template:
+    metadata:
+      labels:
+        app: game
+    spec:
+      containers:
+      - name: game
+        image: {{ .Values.game.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      restartPolicy: Always

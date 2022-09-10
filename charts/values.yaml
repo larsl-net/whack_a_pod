@@ -1,0 +1,18 @@
+---
+#ingress:
+#  enabled: true
+#  hostname: whack-a-pod.example.com
+#  annotations:
+#    traefik.ingress.kubernetes.io/router.middlewares: traefik-system-http-to-https@kubernetescrd
+#    tls:
+#      - host: 
+#         - whack-a-pod.example.com
+
+admin:
+  image: ghcr.io/larsl-net/whack_a_pod:admin-develop
+  env:
+    - name: APIIMAGE
+      value: ghcr.io/larsl-net/whack_a_pod:api-develop
+
+game:
+  image: ghcr.io/larsl-net/whack_a_pod:game-develop
