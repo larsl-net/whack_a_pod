@@ -795,15 +795,16 @@ function LOGWINDOW(){
             item = new PODLIST(e);
         }
 
-        if (typeof e.metadata != "undefined"){
-            if (e.metadata.selfLink.indexOf("Pod") > -1 ) {
-                item = new POD(e);
-            }
+        // If e.metadata not undefined
+        // if (typeof e.metadata != "undefined"){
+        //     if (e.metadata.selfLink.indexOf("Pod") > -1 ) {
+        //         item = new POD(e);
+        //     }
     
-            if (e.metadata.selfLink.indexOf("Node") > -1 ) {
-                item = new NODE(e);
-            }
-        }
+        //     if (e.metadata.selfLink.indexOf("Node") > -1 ) {
+        //         item = new NODE(e);
+        //     }
+        // }
 
         if (IsError(item)){
             return;
